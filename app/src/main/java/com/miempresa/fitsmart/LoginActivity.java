@@ -34,21 +34,26 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin.setOnClickListener(v -> {
 
-            String email = etEmail.getText().toString();
-            String password = etPassword.getText().toString();
+            String email = etEmail.getText().toString().trim();
+            String password = etPassword.getText().toString().trim();
+
+            if(email.isEmpty() || password.isEmpty()) {
+
+                Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             int userId = repo.login(email, password);
 
             if(userId != -1) {
 
                 session.saveUser(userId, email);
-
                 Toast.makeText(this, "Login correcto", Toast.LENGTH_SHORT).show();
-
                 startActivity(new Intent(this, ProfileActivity.class));
                 finish();
 
             } else {
+
                 Toast.makeText(this, "Error en login", Toast.LENGTH_SHORT).show();
             }
         });

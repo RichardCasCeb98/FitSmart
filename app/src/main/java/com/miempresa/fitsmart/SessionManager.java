@@ -29,6 +29,7 @@ public class SessionManager {
     }
 
     public void logout() {
+        SharedPreferences.Editor editor = prefs.edit();
         editor.clear();
         editor.apply();
     }

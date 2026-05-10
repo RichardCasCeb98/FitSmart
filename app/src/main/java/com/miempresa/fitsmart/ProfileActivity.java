@@ -1,6 +1,7 @@
 package com.miempresa.fitsmart;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class ProfileActivity extends AppCompatActivity {
 
     EditText etAge, etWeight, etHeight, etLevel, etGoal;
-    Button btnSave;
+    Button btnSave, btnLogout;
     UserRepository repo;
     SessionManager session;
 
@@ -31,6 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
         etLevel = findViewById(R.id.etLevel);
         etGoal = findViewById(R.id.etGoal);
         btnSave = findViewById(R.id.btnSave);
+        btnLogout = findViewById(R.id.btnLogout);
 
         btnSave.setOnClickListener(v -> {
 
@@ -46,6 +48,15 @@ public class ProfileActivity extends AppCompatActivity {
             if(result) {
                 Toast.makeText(this, "Perfil guardado", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        btnLogout.setOnClickListener(v -> {
+
+            session.logout();
+            Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+
         });
     }
 }
