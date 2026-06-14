@@ -23,17 +23,25 @@
         android:layout_height="55dp"
         android:hint="Altura" />
 
-    <EditText
-        android:id="@+id/etLevel"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:hint="Nivel" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nivel"/>
 
-    <EditText
-        android:id="@+id/etGoal"
+    <Spinner
+        android:id="@+id/spLevel"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:hint="Objetivo" />
+        android:layout_height="48dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Objetivo"/>
+
+    <Spinner
+        android:id="@+id/spGoal"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
 
     <Button
         android:id="@+id/btnSave"

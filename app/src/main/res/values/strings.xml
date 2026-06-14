@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">FitSmart</string>
+
+    <string-array name="levels">
+        <item>Principiante</item>
+        <item>Intermedio</item>
+        <item>Avanzado</item>
+    </string-array>
+
+    <string-array name="goals">
+        <item>Ganar masa muscular</item>
+        <item>Perder grasa</item>
+        <item>Mantenimiento</item>
+        <item>Fuerza</item>
+    </string-array>
 </resources>

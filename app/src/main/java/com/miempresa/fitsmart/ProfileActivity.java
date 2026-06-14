@@ -1,62 +1,130 @@
 package com.miempresa.fitsmart;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
 public class ProfileActivity extends AppCompatActivity {
 
-    EditText etAge, etWeight, etHeight, etLevel, etGoal;
-    Button btnSave, btnLogout;
-    UserRepository repo;
-    SessionManager session;
+    private EditText etAge, etWeight, etHeight;
+    Spinner spLevel, spGoal;
+    private Button btnSave, btnLogout;
 
-    @SuppressLint("MissingInflatedId")
+    private UserRepository repo;
+    private SessionManager session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         session = new SessionManager(this);
-
         repo = new UserRepository(this);
 
         etAge = findViewById(R.id.etAge);
         etWeight = findViewById(R.id.etWeight);
         etHeight = findViewById(R.id.etHeight);
-        etLevel = findViewById(R.id.etLevel);
-        etGoal = findViewById(R.id.etGoal);
+        spLevel = findViewById(R.id.spLevel);
+        spGoal = findViewById(R.id.spGoal);
         btnSave = findViewById(R.id.btnSave);
         btnLogout = findViewById(R.id.btnLogout);
 
-        btnSave.setOnClickListener(v -> {
+        ArrayAdapter<CharSequence> levelAdapter = ArrayAdapter.createFromResource(this, R.array.levels, android.R.layout.simple_spinner_item);
+        levelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-            int userId = session.getUserId();
-            int age = Integer.parseInt(etAge.getText().toString());
-            double weight = Double.parseDouble(etWeight.getText().toString());
-            double height = Double.parseDouble(etHeight.getText().toString());
-            String level = etLevel.getText().toString();
-            String goal = etGoal.getText().toString();
+        spLevel.setAdapter(levelAdapter);
 
-            boolean result = repo.saveProfile(userId, age, weight, height, level, goal);
+        ArrayAdapter<CharSequence> goalAdapter = ArrayAdapter.createFromResource(this, R.array.goals, android.R.layout.simple_spinner_item);
 
-            if(result) {
-                Toast.makeText(this, "Perfil guardado", Toast.LENGTH_SHORT).show();
-            }
-        });
+        goalAdapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item);
 
+        spGoal.setAdapter(goalAdapter);
+
+        // Guardar perfil
+        btnSave.setOnClickListener(v -> saveProfile());
+
+        // Cerrar sesión
         btnLogout.setOnClickListener(v -> {
 
             session.logout();
-            Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+
+            Intent intent = new Intent(
+                    ProfileActivity.this,
+                    LoginActivity.class
+            );
+
             startActivity(intent);
             finish();
-
         });
+    }
+
+    private void saveProfile() {
+
+        String ageText = etAge.getText().toString().trim();
+        String weightText = etWeight.getText().toString().trim();
+        String heightText = etHeight.getText().toString().trim();
+        String level = spLevel.getSelectedItem().toString();
+        String goal = spGoal.getSelectedItem().toString();
+
+        // Validar campos vacíos
+        if (ageText.isEmpty() || weightText.isEmpty() || heightText.isEmpty()) {
+
+            Toast.makeText(
+                    this,
+                    "Completa todos los campos",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+
+        try {
+
+            int age = Integer.parseInt(ageText);
+            double weight = Double.parseDouble(weightText);
+            double height = Double.parseDouble(heightText);
+
+            int userId = session.getUserId();
+
+            boolean result = repo.saveProfile(
+                    userId,
+                    age,
+                    weight,
+                    height,
+                    level,
+                    goal
+            );
+
+            if (result) {
+
+                Toast.makeText(
+                        this,
+                        "Perfil guardado correctamente",
+                        Toast.LENGTH_SHORT
+                ).show();
+
+            } else {
+
+                Toast.makeText(
+                        this,
+                        "Error al guardar el perfil",
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+
+        } catch (NumberFormatException e) {
+
+            Toast.makeText(
+                    this,
+                    "Edad, peso y altura deben ser numéricos",
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
     }
 }
