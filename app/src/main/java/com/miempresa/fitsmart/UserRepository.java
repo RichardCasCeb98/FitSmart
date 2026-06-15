@@ -31,10 +31,7 @@ public class UserRepository {
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery(
-                "SELECT id FROM users WHERE email=? AND password=?",
-                new String[]{email, password}
-        );
+        Cursor cursor = db.rawQuery("SELECT id FROM users WHERE email=? AND password=?", new String[]{email, password});
 
         if (cursor.moveToFirst()) {
             int userId = cursor.getInt(0);

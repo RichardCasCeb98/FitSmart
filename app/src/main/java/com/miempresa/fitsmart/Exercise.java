@@ -32,4 +32,20 @@ public class Exercise {
     public int getReps() {
         return reps;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getMuscleGroup() {
+        return muscleGroup;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public String getGoal() {
+        return goal;
+    }
 }
