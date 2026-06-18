@@ -1,24 +1,50 @@
 package com.miempresa.fitsmart;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class RoutineActivity extends AppCompatActivity {
+
+    private TextView tvRoutineName;
+    private TextView tvDays;
+    private TextView tvExercises;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_routine);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        tvRoutineName = findViewById(R.id.tvRoutineName);
+        tvDays = findViewById(R.id.tvDays);
+        tvExercises = findViewById(R.id.tvExercises);
+
+        SessionManager session = new SessionManager(this);
+        UserRepository userRepo = new UserRepository(this);
+
+        int userId = session.getUserId();
+
+        Profile profile = userRepo.getProfile(userId);
+
+        if(profile != null) {
+
+            RoutineGenerator generator = new RoutineGenerator(this);
+
+            Routine routine = generator.generateRoutine(profile.getAge(), profile.getLevel(), profile.getGoal());
+
+            tvRoutineName.setText("Rutina: " + routine.getName());
+
+            tvDays.setText("Días de entrenamiento: " + routine.getDays());
+
+            StringBuilder builder = new StringBuilder();
+
+            for(Exercise exercise : routine.getExercises()) {
+
+                builder.append("• ").append(exercise.getName()).append(" - ").append(exercise.getSets()).append("x").append(exercise.getReps()).append("\n");
+            }
+
+            tvExercises.setText(builder.toString());
+        }
     }
 }

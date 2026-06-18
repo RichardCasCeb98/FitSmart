@@ -77,16 +77,31 @@ public class ProfileActivity extends AppCompatActivity {
             double weight = Double.parseDouble(weightText);
             double height = Double.parseDouble(heightText);
 
+            if(age < 12 || age > 100) {
+                Toast.makeText(this, "Edad no válida", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if(weight <= 0 || height <= 0) {
+                Toast.makeText(this, "Peso y altura deben ser mayores que 0", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             int userId = session.getUserId();
             boolean result = repo.saveProfile(userId, age, weight, height, level, goal);
 
             if (result) {
+
                 Toast.makeText(this, "Perfil guardado correctamente", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ProfileActivity.this, RoutineActivity.class);
+                startActivity(intent);
 
             } else {
                 Toast.makeText(this, "Error al guardar el perfil", Toast.LENGTH_SHORT).show();
             }
+
         } catch (NumberFormatException e) {
+
             Toast.makeText(this, "Edad, peso y altura deben ser numéricos", Toast.LENGTH_SHORT).show();
         }
     }
