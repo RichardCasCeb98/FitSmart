@@ -2,8 +2,8 @@ package com.miempresa.fitsmart;
 
 import android.os.Bundle;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
+import java.util.List;
 
 public class RoutineActivity extends AppCompatActivity {
 
@@ -21,30 +21,29 @@ public class RoutineActivity extends AppCompatActivity {
         tvExercises = findViewById(R.id.tvExercises);
 
         SessionManager session = new SessionManager(this);
-        UserRepository userRepo = new UserRepository(this);
 
         int userId = session.getUserId();
 
-        Profile profile = userRepo.getProfile(userId);
+        RoutineRepository routineRepo = new RoutineRepository(this);
+        RoutineEntity routine = routineRepo.getRoutineByUser(userId);
 
-        if(profile != null) {
-
-            RoutineGenerator generator = new RoutineGenerator(this);
-
-            Routine routine = generator.generateRoutine(profile.getAge(), profile.getLevel(), profile.getGoal());
+        if (routine != null) {
 
             tvRoutineName.setText("Rutina: " + routine.getName());
-
-            tvDays.setText("Días de entrenamiento: " + routine.getDays());
-
+            tvDays.setText("Días de entrenamiento: " + routine.getDaysPerWeek());
+            List<Exercise> exercises = routineRepo.getExercisesByRoutine(routine.getId());
             StringBuilder builder = new StringBuilder();
 
-            for(Exercise exercise : routine.getExercises()) {
-
+            for (Exercise exercise : exercises) {
                 builder.append("• ").append(exercise.getName()).append(" - ").append(exercise.getSets()).append("x").append(exercise.getReps()).append("\n");
             }
 
             tvExercises.setText(builder.toString());
+
+        } else {
+            tvRoutineName.setText("No existe ninguna rutina");
+            tvDays.setText("");
+            tvExercises.setText("");
         }
     }
 }

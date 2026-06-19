@@ -93,6 +93,9 @@ public class ProfileActivity extends AppCompatActivity {
             if (result) {
 
                 Toast.makeText(this, "Perfil guardado correctamente", Toast.LENGTH_SHORT).show();
+                RoutineGenerator generator = new RoutineGenerator(this);
+                Routine routine = generator.generateRoutine(age, level, goal);
+                generator.saveRoutine(userId, routine);
                 Intent intent = new Intent(ProfileActivity.this, RoutineActivity.class);
                 startActivity(intent);
 

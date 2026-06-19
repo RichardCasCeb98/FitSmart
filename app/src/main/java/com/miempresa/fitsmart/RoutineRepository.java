@@ -3,6 +3,10 @@ package com.miempresa.fitsmart;
 import android.content.Context;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.Cursor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RoutineRepository {
 
@@ -46,5 +50,55 @@ public class RoutineRepository {
         db.close();
 
         return result != -1;
+    }
+
+    public RoutineEntity getRoutineByUser(int userId) {
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT id, user_id, name, days_per_week FROM routines WHERE user_id = ? ORDER BY id DESC LIMIT 1", new String[]{String.valueOf(userId)});
+        RoutineEntity routine = null;
+
+        if(cursor.moveToFirst()) {
+
+            int id = cursor.getInt(0);
+            int dbUserId = cursor.getInt(1);
+            String name = cursor.getString(2);
+            int days = cursor.getInt(3);
+
+            routine = new RoutineEntity(id, dbUserId, name, days);
+        }
+
+        cursor.close();
+        db.close();
+
+        return routine;
+    }
+
+    public List<Exercise> getExercisesByRoutine(int routineId) {
+
+        List<Exercise> exercises = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT e.id, e.name, e.muscle_group, e.level, e.goal, re.sets, re.reps " +
+                        "FROM routine_exercises re " +
+                        "INNER JOIN exercises e ON re.exercise_id = e.id " +
+                        "WHERE re.routine_id = ?", new String[]{String.valueOf(routineId)});
+
+        while(cursor.moveToNext()) {
+
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            String muscleGroup = cursor.getString(2);
+            String level = cursor.getString(3);
+            String goal = cursor.getString(4);
+            int sets = cursor.getInt(5);
+            int reps = cursor.getInt(6);
+
+            exercises.add(new Exercise(id, name, muscleGroup, level, goal, sets, reps));
+        }
+
+        cursor.close();
+        db.close();
+        return exercises;
     }
 }
