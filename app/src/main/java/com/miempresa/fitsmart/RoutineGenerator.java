@@ -7,9 +7,11 @@ import java.util.List;
 public class RoutineGenerator {
 
     private ExerciseRepository exerciseRepo;
+    private RoutineRepository routineRepo;
 
     public RoutineGenerator(Context context) {
         exerciseRepo = new ExerciseRepository(context);
+        routineRepo = new RoutineRepository(context);
     }
 
     public Routine generateRoutine(int age, String level, String goal) {
@@ -37,5 +39,17 @@ public class RoutineGenerator {
         }
 
         return new Routine(routineName, days, exercises);
+    }
+
+    public void saveRoutine(int userId, Routine routine) {
+
+        long routineId = routineRepo.saveRoutine(userId, routine.getName(), routine.getDays());
+
+        String day = "Lunes";
+
+        for (Exercise exercise : routine.getExercises()) {
+            routineRepo.saveRoutineExercise(routineId, exercise.getId(), day, exercise.getSets(), exercise.getReps());
+
+        }
     }
 }
