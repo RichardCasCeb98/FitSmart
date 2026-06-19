@@ -8,7 +8,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String db_name = "fitsmart.db";
 
-    private static final int db_version = 2;
+    private static final int db_version = 3;
 
     public DatabaseHelper(Context context) {
         super(context, db_name, null, db_version);
@@ -51,6 +51,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         );
 
         db.execSQL(
+                "CREATE TABLE routines (" +
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "user_id INTEGER," +
+                        "name TEXT," +
+                        "days_per_week INTEGER" +
+                        ")"
+        );
+
+        db.execSQL(
+                "CREATE TABLE routine_exercises (" +
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "routine_id INTEGER," +
+                        "exercise_id INTEGER," +
+                        "day TEXT," +
+                        "sets INTEGER," +
+                        "reps INTEGER" +
+                        ")"
+        );
+
+        db.execSQL(
                 "INSERT INTO exercises " +
                         "(name, muscle_group, level, goal, sets, reps) VALUES " +
                         "('Press banca','Pecho','Principiante','Ganar masa muscular',4,10)"
@@ -76,6 +96,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS users");
         db.execSQL("DROP TABLE IF EXISTS user_profile");
         db.execSQL("DROP TABLE IF EXISTS exercises");
+        db.execSQL("DROP TABLE IF EXISTS routines");
+        db.execSQL("DROP TABLE IF EXISTS routine_exercises");
 
         onCreate(db);
     }
