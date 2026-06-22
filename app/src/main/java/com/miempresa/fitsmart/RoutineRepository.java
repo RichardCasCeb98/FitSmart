@@ -11,7 +11,6 @@ import java.util.List;
 public class RoutineRepository {
 
     private DatabaseHelper dbHelper;
-
     public RoutineRepository(Context context) {
         dbHelper = new DatabaseHelper(context);
     }
@@ -99,6 +98,35 @@ public class RoutineRepository {
 
         cursor.close();
         db.close();
+        return exercises;
+    }
+
+    public List<RoutineExercise> getRoutineExercises(int routineId) {
+
+        List<RoutineExercise> exercises = new ArrayList<>();
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT id, routine_id, exercise_id, day, sets, reps " +
+                        "FROM routine_exercises " +
+                        "WHERE routine_id = ?", new String[]{String.valueOf(routineId)});
+
+        while (cursor.moveToNext()) {
+
+            int id = cursor.getInt(0);
+            int dbRoutineId = cursor.getInt(1);
+            int exerciseId = cursor.getInt(2);
+            String day = cursor.getString(3);
+            int sets = cursor.getInt(4);
+            int reps = cursor.getInt(5);
+
+            exercises.add(new RoutineExercise(id, dbRoutineId, exerciseId, day, sets, reps));
+        }
+
+        cursor.close();
+        db.close();
+
         return exercises;
     }
 }

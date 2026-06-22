@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RoutineActivity extends AppCompatActivity {
 
@@ -30,7 +33,6 @@ public class RoutineActivity extends AppCompatActivity {
         tvExercises = findViewById(R.id.tvExercises);
 
         SessionManager session = new SessionManager(this);
-
         int userId = session.getUserId();
 
         RoutineRepository routineRepo = new RoutineRepository(this);
@@ -41,15 +43,35 @@ public class RoutineActivity extends AppCompatActivity {
             tvRoutineName.setText("Rutina: " + routine.getName());
             tvDays.setText("Días de entrenamiento: " + routine.getDaysPerWeek());
             List<Exercise> exercises = routineRepo.getExercisesByRoutine(routine.getId());
+            List<RoutineExercise> routineExercises = routineRepo.getRoutineExercises(routine.getId());
+
             StringBuilder builder = new StringBuilder();
 
+            Map<Integer, String> exerciseDays = new HashMap<>();
+
+            for (RoutineExercise re : routineExercises) {
+                exerciseDays.put(re.getExerciseId(), re.getDay());
+            }
+
+            String currentDay = "";
+
             for (Exercise exercise : exercises) {
+
+                String day = exerciseDays.get(exercise.getId());
+
+                if (day != null && !day.equals(currentDay)) {
+                    currentDay = day;
+                    builder.append("\n").append(day).append("\n");
+                }
+
                 builder.append("• ").append(exercise.getName()).append(" - ").append(exercise.getSets()).append("x").append(exercise.getReps()).append("\n");
+
             }
 
             tvExercises.setText(builder.toString());
 
         } else {
+
             tvRoutineName.setText("No existe ninguna rutina");
             tvDays.setText("");
             tvExercises.setText("");
@@ -66,8 +88,7 @@ public class RoutineActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.menu_profile) {
-            Intent intent = new Intent(this, ProfileActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, ProfileActivity.class));
             return true;
         }
 
@@ -77,10 +98,12 @@ public class RoutineActivity extends AppCompatActivity {
             session.logout();
 
             Intent intent = new Intent(this, LoginActivity.class);
+
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
 
             finish();
+
             return true;
         }
 

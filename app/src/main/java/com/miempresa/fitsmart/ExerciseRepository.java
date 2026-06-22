@@ -43,4 +43,29 @@ public class ExerciseRepository {
 
         return exercises;
     }
+
+    public Exercise getExerciseById(int exerciseId) {
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM exercises WHERE id = ?", new String[]{String.valueOf(exerciseId)});
+        Exercise exercise = null;
+
+        if (cursor.moveToFirst()) {
+
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            String muscleGroup = cursor.getString(2);
+            String level = cursor.getString(3);
+            String goal = cursor.getString(4);
+            int sets = cursor.getInt(5);
+            int reps = cursor.getInt(6);
+
+            exercise = new Exercise(id, name, muscleGroup, level, goal, sets, reps);
+        }
+
+        cursor.close();
+        db.close();
+
+        return exercise;
+    }
 }

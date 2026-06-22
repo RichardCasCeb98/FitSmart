@@ -60,16 +60,18 @@ public class RoutineGenerator {
     public void saveRoutine(int userId, Routine routine) {
 
         long routineId = routineRepo.saveRoutine(userId, routine.getName(), routine.getDays());
-        int dayIndex = 0;
+        int currentDay = 0;
+        int exercisesPerDay = (int) Math.ceil((double) routine.getExercises().size() / routine.getDays());
+        int counter = 0;
 
         for (Exercise exercise : routine.getExercises()) {
-
-            String day = weekDays[dayIndex];
+            String day = weekDays[currentDay];
             routineRepo.saveRoutineExercise(routineId, exercise.getId(), day, exercise.getSets(), exercise.getReps());
-            dayIndex++;
+            counter++;
 
-            if (dayIndex >= routine.getDays()) {
-                dayIndex = 0;
+            if (counter >= exercisesPerDay && currentDay < routine.getDays() - 1) {
+                currentDay++;
+                counter = 0;
             }
         }
     }
