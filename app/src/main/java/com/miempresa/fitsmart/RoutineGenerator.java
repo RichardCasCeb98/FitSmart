@@ -10,6 +10,7 @@ public class RoutineGenerator {
 
     private ExerciseRepository exerciseRepo;
     private RoutineRepository routineRepo;
+    private static final int exercises_per_day = 5;
     private final String[] weekDays = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
 
     public RoutineGenerator(Context context) {
@@ -17,43 +18,49 @@ public class RoutineGenerator {
         routineRepo = new RoutineRepository(context);
     }
 
-    public Routine generateRoutine(int age,String level, String goal) {
+    public Routine generateRoutine(int age, String level, String goal) {
 
         List<Exercise> availableExercises = exerciseRepo.getExercises(level, goal);
 
         String routineName;
         int days;
-        int exerciseCount;
 
         if (level.equals("Principiante")) {
             routineName = "Full Body";
             days = 3;
-            exerciseCount = 6;
         }
         else if (level.equals("Intermedio")) {
             routineName = "Push Pull Legs";
             days = 4;
-            exerciseCount = 8;
         }
         else {
             routineName = "Avanzada";
             days = 5;
-            exerciseCount = 10;
         }
 
         if (age < 18) {
             days = Math.max(2, days - 1);
         }
 
-        Collections.shuffle(availableExercises);
+        int totalExercisesNeeded = days * exercises_per_day;
         List<Exercise> selectedExercises = new ArrayList<>();
-        int limit = Math.min(exerciseCount, availableExercises.size());
 
-        for (int i = 0; i < limit; i++) {
-            selectedExercises.add(availableExercises.get(i));
+        if (!availableExercises.isEmpty()) {
 
+            Collections.shuffle(availableExercises);
+            int index = 0;
+
+            while (selectedExercises.size() < totalExercisesNeeded) {
+
+                if (index >= availableExercises.size()) {
+                    index = 0;
+                    Collections.shuffle(availableExercises);
+                }
+
+                selectedExercises.add(availableExercises.get(index));
+                index++;
+            }
         }
-
         return new Routine(routineName, days, selectedExercises);
     }
 
@@ -61,15 +68,15 @@ public class RoutineGenerator {
 
         long routineId = routineRepo.saveRoutine(userId, routine.getName(), routine.getDays());
         int currentDay = 0;
-        int exercisesPerDay = (int) Math.ceil((double) routine.getExercises().size() / routine.getDays());
         int counter = 0;
 
         for (Exercise exercise : routine.getExercises()) {
+
             String day = weekDays[currentDay];
             routineRepo.saveRoutineExercise(routineId, exercise.getId(), day, exercise.getSets(), exercise.getReps());
             counter++;
 
-            if (counter >= exercisesPerDay && currentDay < routine.getDays() - 1) {
+            if (counter >= exercises_per_day && currentDay < routine.getDays() - 1) {
                 currentDay++;
                 counter = 0;
             }
