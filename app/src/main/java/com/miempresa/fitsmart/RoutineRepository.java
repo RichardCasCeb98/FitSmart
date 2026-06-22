@@ -110,7 +110,8 @@ public class RoutineRepository {
         Cursor cursor = db.rawQuery(
                 "SELECT id, routine_id, exercise_id, day, sets, reps " +
                         "FROM routine_exercises " +
-                        "WHERE routine_id = ?", new String[]{String.valueOf(routineId)});
+                        "WHERE routine_id = ? " +
+                        "ORDER BY id", new String[]{String.valueOf(routineId)});
 
         while (cursor.moveToNext()) {
 

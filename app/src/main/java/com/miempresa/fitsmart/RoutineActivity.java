@@ -10,9 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class RoutineActivity extends AppCompatActivity {
 
@@ -36,36 +34,31 @@ public class RoutineActivity extends AppCompatActivity {
         int userId = session.getUserId();
 
         RoutineRepository routineRepo = new RoutineRepository(this);
+        ExerciseRepository exerciseRepo = new ExerciseRepository(this);
+
         RoutineEntity routine = routineRepo.getRoutineByUser(userId);
 
         if (routine != null) {
 
             tvRoutineName.setText("Rutina: " + routine.getName());
             tvDays.setText("Días de entrenamiento: " + routine.getDaysPerWeek());
-            List<Exercise> exercises = routineRepo.getExercisesByRoutine(routine.getId());
+
             List<RoutineExercise> routineExercises = routineRepo.getRoutineExercises(routine.getId());
-
             StringBuilder builder = new StringBuilder();
-
-            Map<Integer, String> exerciseDays = new HashMap<>();
-
-            for (RoutineExercise re : routineExercises) {
-                exerciseDays.put(re.getExerciseId(), re.getDay());
-            }
-
             String currentDay = "";
 
-            for (Exercise exercise : exercises) {
+            for (RoutineExercise re : routineExercises) {
 
-                String day = exerciseDays.get(exercise.getId());
-
-                if (day != null && !day.equals(currentDay)) {
-                    currentDay = day;
-                    builder.append("\n").append(day).append("\n");
+                if (!re.getDay().equals(currentDay)) {
+                    currentDay = re.getDay();
+                    builder.append("\n").append(currentDay).append("\n");
                 }
 
-                builder.append("• ").append(exercise.getName()).append(" - ").append(exercise.getSets()).append("x").append(exercise.getReps()).append("\n");
+                Exercise exercise = exerciseRepo.getExerciseById(re.getExerciseId());
 
+                if (exercise != null) {
+                    builder.append("• ").append(exercise.getName()).append(" - ").append(re.getSets()).append("x").append(re.getReps()).append("\n");
+                }
             }
 
             tvExercises.setText(builder.toString());
@@ -101,7 +94,6 @@ public class RoutineActivity extends AppCompatActivity {
 
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-
             finish();
 
             return true;
