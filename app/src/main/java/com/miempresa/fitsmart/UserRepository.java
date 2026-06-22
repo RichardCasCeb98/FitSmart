@@ -97,4 +97,16 @@ public class UserRepository {
         return profile;
     }
 
+    public boolean hasProfile(int userId) {
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT id FROM user_profile WHERE user_id = ?", new String[]{String.valueOf(userId)});
+
+        boolean exists = cursor.moveToFirst();
+
+        cursor.close();
+        db.close();
+        return exists;
+    }
+
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -17,15 +18,26 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+
         session = new SessionManager(this);
+        repo = new UserRepository(this);
 
         if(session.isLogged()) {
-            startActivity(new Intent(this, ProfileActivity.class));
+
+            int userId = session.getUserId();
+
+            if(repo.hasProfile(userId)) {
+                startActivity(new Intent(this, RoutineActivity.class));
+
+            } else {
+                startActivity(new Intent(this, ProfileActivity.class));
+            }
+
             finish();
+            return;
         }
 
-        repo = new UserRepository(this);
+        setContentView(R.layout.activity_login);
 
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
@@ -49,12 +61,18 @@ public class LoginActivity extends AppCompatActivity {
 
                 session.saveUser(userId, email);
                 Toast.makeText(this, "Login correcto", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, ProfileActivity.class));
+
+                if(repo.hasProfile(userId)) {
+                    startActivity(new Intent(this, RoutineActivity.class));
+
+                } else {
+                    startActivity(new Intent(this, ProfileActivity.class));
+                }
+
                 finish();
 
             } else {
-
-                Toast.makeText(this, "Error en login", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Email o contraseña incorrectos", Toast.LENGTH_SHORT).show();
             }
         });
 
