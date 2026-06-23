@@ -495,6 +495,102 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "(name, muscle_group, level, goal, sets, reps) VALUES " +
                         "('Curl con barra Z','Biceps','Avanzado','Fuerza',5,5)"
         );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Elevaciones laterales','Hombro','Intermedio','Mantenimiento',3,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Curl con barra','Biceps','Intermedio','Mantenimiento',3,12)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Press francés','Triceps','Intermedio','Mantenimiento',3,12)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Crunch abdominal','Abdomen','Intermedio','Mantenimiento',3,20)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Elevaciones laterales','Hombro','Intermedio','Fuerza',5,5)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Curl con barra Z','Biceps','Intermedio','Fuerza',5,5)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Fondos lastrados','Triceps','Intermedio','Fuerza',5,5)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Plancha con peso','Abdomen','Intermedio','Fuerza',4,60)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Press Arnold','Hombro','Avanzado','Perder grasa',4,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Curl martillo','Biceps','Avanzado','Perder grasa',4,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Extensión de tríceps en polea','Triceps','Avanzado','Perder grasa',4,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Crunch en polea','Abdomen','Avanzado','Perder grasa',4,20)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Press Arnold','Hombro','Avanzado','Mantenimiento',4,10)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Curl inclinado','Biceps','Avanzado','Mantenimiento',4,10)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Press francés','Triceps','Avanzado','Mantenimiento',4,10)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Ab Wheel','Abdomen','Avanzado','Mantenimiento',4,15)"
+        );
     }
 
     @Override

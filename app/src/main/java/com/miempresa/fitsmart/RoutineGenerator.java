@@ -82,4 +82,16 @@ public class RoutineGenerator {
             }
         }
     }
+
+    private void addExercises(List<Exercise> routineExercises, String muscleGroup, String level, String goal, int amount) {
+
+        List<Exercise> exercises = exerciseRepo.getExercisesByMuscleGroup(muscleGroup, level, goal);
+        Collections.shuffle(exercises);
+
+        int limit = Math.min(amount, exercises.size());
+
+        for (int i = 0; i < limit; i++) {
+            routineExercises.add(exercises.get(i));
+        }
+    }
 }

@@ -68,4 +68,34 @@ public class ExerciseRepository {
 
         return exercise;
     }
+
+    public List<Exercise> getExercisesByMuscleGroup(String muscleGroup, String level, String goal) {
+
+        List<Exercise> exercises = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT * FROM exercises " +
+                        "WHERE muscle_group = ? " +
+                        "AND level = ? " +
+                        "AND goal = ?", new String[]{muscleGroup, level, goal});
+
+        while (cursor.moveToNext()) {
+
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            String dbMuscleGroup = cursor.getString(2);
+            String exerciseLevel = cursor.getString(3);
+            String exerciseGoal = cursor.getString(4);
+            int sets = cursor.getInt(5);
+            int reps = cursor.getInt(6);
+
+            exercises.add(new Exercise(id, name, dbMuscleGroup, exerciseLevel, exerciseGoal, sets, reps));
+        }
+
+        cursor.close();
+        db.close();
+
+        return exercises;
+    }
 }
