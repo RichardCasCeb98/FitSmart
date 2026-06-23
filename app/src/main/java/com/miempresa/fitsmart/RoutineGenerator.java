@@ -4,7 +4,9 @@ import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class RoutineGenerator {
 
@@ -20,47 +22,70 @@ public class RoutineGenerator {
 
     public Routine generateRoutine(int age, String level, String goal) {
 
-        List<Exercise> availableExercises = exerciseRepo.getExercises(level, goal);
-
         String routineName;
         int days;
+        List<Exercise> selectedExercises = new ArrayList<>();
+        Set<Integer> usedExercises = new HashSet<>();
 
         if (level.equals("Principiante")) {
+
             routineName = "Full Body";
             days = 3;
+
+            for (int i = 0; i < days; i++) {
+
+                addExercises(selectedExercises, usedExercises, "Pecho", level, goal, 1);
+                addExercises(selectedExercises, usedExercises, "Espalda", level, goal, 1);
+                addExercises(selectedExercises, usedExercises, "Pierna", level, goal, 1);
+                addExercises(selectedExercises, usedExercises, "Hombro", level, goal, 1);
+
+                if (i % 2 == 0) {
+                    addExercises(selectedExercises, usedExercises, "Abdomen", level, goal, 1);
+                } else {
+                    addExercises(selectedExercises, usedExercises, "Cardio", level, goal, 1);
+                }
+            }
         }
         else if (level.equals("Intermedio")) {
+
             routineName = "Push Pull Legs";
             days = 4;
+
+            addExercises(selectedExercises, usedExercises, "Pecho", level, goal, 3);
+            addExercises(selectedExercises, usedExercises, "Triceps", level, goal, 2);
+
+            addExercises(selectedExercises, usedExercises, "Espalda", level, goal, 3);
+            addExercises(selectedExercises, usedExercises, "Biceps", level, goal, 2);
+
+            addExercises(selectedExercises, usedExercises, "Pierna", level, goal, 3);
+            addExercises(selectedExercises, usedExercises, "Abdomen", level, goal, 2);
+
+            addExercises(selectedExercises, usedExercises, "Hombro", level, goal, 3);
+            addExercises(selectedExercises, usedExercises, "Cardio", level, goal, 2);
         }
         else {
+
             routineName = "Avanzada";
             days = 5;
+
+            addExercises(selectedExercises, usedExercises, "Pecho", level, goal, 5);
+
+            addExercises(selectedExercises, usedExercises, "Espalda", level, goal, 5);
+
+            addExercises(selectedExercises, usedExercises, "Pierna", level, goal, 5);
+
+            addExercises(selectedExercises, usedExercises, "Hombro", level, goal, 3);
+            addExercises(selectedExercises, usedExercises, "Abdomen", level, goal, 2);
+
+            addExercises(selectedExercises, usedExercises, "Biceps", level, goal, 2);
+            addExercises(selectedExercises, usedExercises, "Triceps", level, goal, 2);
+            addExercises(selectedExercises, usedExercises, "Cardio", level, goal, 1);
         }
 
         if (age < 18) {
             days = Math.max(2, days - 1);
         }
 
-        int totalExercisesNeeded = days * exercises_per_day;
-        List<Exercise> selectedExercises = new ArrayList<>();
-
-        if (!availableExercises.isEmpty()) {
-
-            Collections.shuffle(availableExercises);
-            int index = 0;
-
-            while (selectedExercises.size() < totalExercisesNeeded) {
-
-                if (index >= availableExercises.size()) {
-                    index = 0;
-                    Collections.shuffle(availableExercises);
-                }
-
-                selectedExercises.add(availableExercises.get(index));
-                index++;
-            }
-        }
         return new Routine(routineName, days, selectedExercises);
     }
 
@@ -83,15 +108,24 @@ public class RoutineGenerator {
         }
     }
 
-    private void addExercises(List<Exercise> routineExercises, String muscleGroup, String level, String goal, int amount) {
+    private void addExercises(List<Exercise> routineExercises, Set<Integer> usedExercises, String muscleGroup, String level, String goal, int amount) {
 
         List<Exercise> exercises = exerciseRepo.getExercisesByMuscleGroup(muscleGroup, level, goal);
         Collections.shuffle(exercises);
 
-        int limit = Math.min(amount, exercises.size());
+        int added = 0;
+        for (Exercise exercise : exercises) {
 
-        for (int i = 0; i < limit; i++) {
-            routineExercises.add(exercises.get(i));
+            if (!usedExercises.contains(exercise.getId())) {
+
+                routineExercises.add(exercise);
+                usedExercises.add(exercise.getId());
+                added++;
+
+                if (added >= amount) {
+                    break;
+                }
+            }
         }
     }
 }
