@@ -86,6 +86,26 @@ public class RoutineGenerator {
             days = Math.max(2, days - 1);
         }
 
+        int totalNeeded = days * exercises_per_day;
+        List<Exercise> allExercises = exerciseRepo.getExercises(level, goal);
+
+        if (!allExercises.isEmpty()) {
+
+            Collections.shuffle(allExercises);
+            int index = 0;
+
+            while (selectedExercises.size() < totalNeeded) {
+
+                if (index >= allExercises.size()) {
+                    index = 0;
+                    Collections.shuffle(allExercises);
+                }
+
+                selectedExercises.add(allExercises.get(index));
+                index++;
+            }
+        }
+
         return new Routine(routineName, days, selectedExercises);
     }
 
@@ -111,9 +131,13 @@ public class RoutineGenerator {
     private void addExercises(List<Exercise> routineExercises, Set<Integer> usedExercises, String muscleGroup, String level, String goal, int amount) {
 
         List<Exercise> exercises = exerciseRepo.getExercisesByMuscleGroup(muscleGroup, level, goal);
-        Collections.shuffle(exercises);
+        if (exercises.isEmpty()) {
+            return;
+        }
 
+        Collections.shuffle(exercises);
         int added = 0;
+
         for (Exercise exercise : exercises) {
 
             if (!usedExercises.contains(exercise.getId())) {
@@ -123,9 +147,22 @@ public class RoutineGenerator {
                 added++;
 
                 if (added >= amount) {
-                    break;
+                    return;
                 }
             }
+        }
+
+        int index = 0;
+        while (added < amount) {
+
+            if (index >= exercises.size()) {
+                index = 0;
+                Collections.shuffle(exercises);
+            }
+
+            routineExercises.add(exercises.get(index));
+            added++;
+            index++;
         }
     }
 }

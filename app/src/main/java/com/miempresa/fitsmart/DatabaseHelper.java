@@ -8,7 +8,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String db_name = "fitsmart.db";
 
-    private static final int db_version = 4;
+    private static final int db_version = 6;
 
     public DatabaseHelper(Context context) {
         super(context, db_name, null, db_version);
@@ -590,6 +590,414 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "INSERT INTO exercises " +
                         "(name, muscle_group, level, goal, sets, reps) VALUES " +
                         "('Ab Wheel','Abdomen','Avanzado','Mantenimiento',4,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Crunch abdominal','Abdomen','Principiante','Ganar masa muscular',3,20)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Elevaciones de piernas','Abdomen','Principiante','Ganar masa muscular',3,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Jumping Jacks','Cardio','Principiante','Ganar masa muscular',4,20)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Mountain Climbers','Cardio','Principiante','Ganar masa muscular',4,20)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Curl martillo','Biceps','Principiante','Ganar masa muscular',3,12)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Fondos en banco','Triceps','Principiante','Ganar masa muscular',3,12)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Remo con mancuerna','Espalda','Principiante','Perder grasa',3,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Press militar','Hombro','Principiante','Perder grasa',3,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Curl de bíceps','Biceps','Principiante','Perder grasa',3,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Extensiones de tríceps','Triceps','Principiante','Perder grasa',3,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Press militar','Hombro','Principiante','Mantenimiento',3,12)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Curl de bíceps','Biceps','Principiante','Mantenimiento',3,12)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Fondos en banco','Triceps','Principiante','Mantenimiento',3,12)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Jumping Jacks','Cardio','Principiante','Mantenimiento',4,20)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Curl con barra','Biceps','Principiante','Fuerza',4,6)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Fondos lastrados','Triceps','Principiante','Fuerza',4,6)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Plancha con peso','Abdomen','Principiante','Fuerza',4,45)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Sprint en cinta','Cardio','Principiante','Fuerza',8,1)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Press inclinado','Pecho','Intermedio','Ganar masa muscular',4,10)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Aperturas con mancuernas','Pecho','Intermedio','Ganar masa muscular',4,12)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Remo con barra','Espalda','Intermedio','Ganar masa muscular',4,10)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Jalón al pecho','Espalda','Intermedio','Ganar masa muscular',4,12)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Prensa de piernas','Pierna','Intermedio','Ganar masa muscular',4,12)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Peso muerto rumano','Pierna','Intermedio','Ganar masa muscular',4,10)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Extensiones de tríceps','Triceps','Intermedio','Ganar masa muscular',4,12)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Press francés','Triceps','Intermedio','Ganar masa muscular',4,10)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Crunch abdominal','Abdomen','Intermedio','Ganar masa muscular',3,20)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Elevaciones de piernas','Abdomen','Intermedio','Ganar masa muscular',3,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Jumping Jacks','Cardio','Intermedio','Ganar masa muscular',4,20)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Mountain Climbers','Cardio','Intermedio','Ganar masa muscular',4,20)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Flexiones','Pecho','Intermedio','Perder grasa',4,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Remo con barra','Espalda','Intermedio','Perder grasa',4,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Zancadas','Pierna','Intermedio','Perder grasa',4,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Press Arnold','Hombro','Intermedio','Perder grasa',4,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Curl martillo','Biceps','Intermedio','Perder grasa',4,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Press francés','Triceps','Intermedio','Perder grasa',4,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Crunch abdominal','Abdomen','Intermedio','Perder grasa',4,20)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Press banca','Pecho','Intermedio','Mantenimiento',4,10)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Remo con barra','Espalda','Intermedio','Mantenimiento',4,10)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Sentadilla','Pierna','Intermedio','Mantenimiento',4,10)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Mountain Climbers','Cardio','Intermedio','Mantenimiento',4,20)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Sprint en cinta','Cardio','Intermedio','Fuerza',10,1)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Dominadas supinas','Espalda','Avanzado','Ganar masa muscular',5,8)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Hack squat','Pierna','Avanzado','Ganar masa muscular',5,10)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Elevaciones laterales','Hombro','Avanzado','Mantenimiento',4,12)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Bicicleta abdominal','Abdomen','Avanzado','Mantenimiento',4,20)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Saltar a la comba','Cardio','Avanzado','Perder grasa',6,40)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Crunch abdominal','Abdomen','Principiante','Mantenimiento',3,20)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Elevaciones de piernas','Abdomen','Principiante','Fuerza',4,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Saltar a la comba','Cardio','Principiante','Mantenimiento',4,30)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Mountain Climbers','Cardio','Principiante','Fuerza',5,20)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Press militar','Hombro','Intermedio','Perder grasa',4,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Elevaciones laterales','Hombro','Intermedio','Perder grasa',4,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Elevaciones de piernas','Abdomen','Intermedio','Perder grasa',4,20)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Saltar a la comba','Cardio','Intermedio','Perder grasa',5,40)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Press militar','Hombro','Intermedio','Mantenimiento',3,12)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Elevaciones de piernas','Abdomen','Intermedio','Mantenimiento',3,20)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Press Arnold','Hombro','Intermedio','Fuerza',5,5)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Crunch abdominal','Abdomen','Intermedio','Fuerza',4,20)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Press banca declinado','Pecho','Avanzado','Mantenimiento',4,10)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Remo con barra','Espalda','Avanzado','Mantenimiento',4,10)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Prensa de piernas','Pierna','Avanzado','Mantenimiento',4,12)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Press Arnold','Hombro','Avanzado','Fuerza',5,5)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Crunch en polea','Abdomen','Avanzado','Fuerza',4,20)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Battle Ropes','Cardio','Avanzado','Fuerza',8,30)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Press militar','Hombro','Avanzado','Perder grasa',4,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Elevaciones laterales','Hombro','Avanzado','Perder grasa',4,15)"
+        );
+
+        db.execSQL(
+                "INSERT INTO exercises " +
+                        "(name, muscle_group, level, goal, sets, reps) VALUES " +
+                        "('Bicicleta abdominal','Abdomen','Avanzado','Perder grasa',4,25)"
         );
     }
 
