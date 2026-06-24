@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ public class RoutineActivity extends AppCompatActivity {
     private TextView tvRoutineName;
     private TextView tvDays;
     private LinearLayout layoutDays;
+    private Button btnHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +33,17 @@ public class RoutineActivity extends AppCompatActivity {
         tvRoutineName = findViewById(R.id.tvRoutineName);
         tvDays = findViewById(R.id.tvDays);
         layoutDays = findViewById(R.id.layoutDays);
+        btnHistory = findViewById(R.id.btnHistory);
 
         SessionManager session = new SessionManager(this);
         int userId = session.getUserId();
+
+        btnHistory.setOnClickListener(v -> {
+
+            Intent intent = new Intent(RoutineActivity.this, WorkoutHistoryActivity.class);
+            startActivity(intent);
+        });
+
 
         RoutineRepository routineRepo = new RoutineRepository(this);
         ExerciseRepository exerciseRepo = new ExerciseRepository(this);
