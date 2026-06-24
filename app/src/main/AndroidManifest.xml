@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FitSmart">
         <activity
+            android:name=".TrainingDayActivity"
+            android:exported="false" />
+        <activity
             android:name=".RoutineActivity"
             android:exported="false" />
         <activity

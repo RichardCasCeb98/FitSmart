@@ -1,9 +1,11 @@
 package com.miempresa.fitsmart;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,7 +18,7 @@ public class RoutineActivity extends AppCompatActivity {
 
     private TextView tvRoutineName;
     private TextView tvDays;
-    private TextView tvExercises;
+    private LinearLayout layoutDays;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +30,7 @@ public class RoutineActivity extends AppCompatActivity {
 
         tvRoutineName = findViewById(R.id.tvRoutineName);
         tvDays = findViewById(R.id.tvDays);
-        tvExercises = findViewById(R.id.tvExercises);
+        layoutDays = findViewById(R.id.layoutDays);
 
         SessionManager session = new SessionManager(this);
         int userId = session.getUserId();
@@ -44,30 +46,50 @@ public class RoutineActivity extends AppCompatActivity {
             tvDays.setText("Días de entrenamiento: " + routine.getDaysPerWeek());
 
             List<RoutineExercise> routineExercises = routineRepo.getRoutineExercises(routine.getId());
-            StringBuilder builder = new StringBuilder();
             String currentDay = "";
 
             for (RoutineExercise re : routineExercises) {
 
                 if (!re.getDay().equals(currentDay)) {
+
                     currentDay = re.getDay();
-                    builder.append("\n").append(currentDay).append("\n");
+
+                    TextView tvDay = new TextView(this);
+                    tvDay.setText(currentDay);
+                    tvDay.setTextSize(20);
+                    tvDay.setTypeface(null, Typeface.BOLD);
+                    tvDay.setPadding(0, 32, 0, 16);
+
+                    String finalCurrentDay = currentDay;
+
+                    tvDay.setOnClickListener(v -> {
+
+                        Intent intent = new Intent(RoutineActivity.this, TrainingDayActivity.class);
+                        intent.putExtra("routine_id", routine.getId());
+                        intent.putExtra("day", finalCurrentDay);
+
+                        startActivity(intent);
+                    });
+
+                    layoutDays.addView(tvDay);
                 }
 
                 Exercise exercise = exerciseRepo.getExerciseById(re.getExerciseId());
 
                 if (exercise != null) {
-                    builder.append("• ").append(exercise.getName()).append(" - ").append(re.getSets()).append("x").append(re.getReps()).append("\n");
+
+                    TextView tvExercise = new TextView(this);
+                    tvExercise.setText("• " + exercise.getName() + " - " + re.getSets() + "x" + re.getReps());
+                    tvExercise.setPadding(50, 0, 0, 12);
+
+                    layoutDays.addView(tvExercise);
                 }
             }
-
-            tvExercises.setText(builder.toString());
 
         } else {
 
             tvRoutineName.setText("No existe ninguna rutina");
             tvDays.setText("");
-            tvExercises.setText("");
         }
     }
 

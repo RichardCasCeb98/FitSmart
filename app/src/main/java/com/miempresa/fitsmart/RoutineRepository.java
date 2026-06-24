@@ -130,4 +130,25 @@ public class RoutineRepository {
 
         return exercises;
     }
+
+    public List<RoutineExercise> getExercisesByDay(int routineId, String day) {
+
+        List<RoutineExercise> exercises = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT id, routine_id, exercise_id, day, sets, reps " +
+                        "FROM routine_exercises " +
+                        "WHERE routine_id=? AND day=?", new String[]{String.valueOf(routineId), day});
+
+        while (cursor.moveToNext()) {
+            exercises.add(new RoutineExercise(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2), cursor.getString(3), cursor.getInt(4), cursor.getInt(5)));
+
+        }
+
+        cursor.close();
+        db.close();
+
+        return exercises;
+    }
 }
