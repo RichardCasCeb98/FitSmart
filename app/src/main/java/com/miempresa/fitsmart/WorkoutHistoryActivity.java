@@ -1,6 +1,8 @@
 package com.miempresa.fitsmart;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +16,10 @@ public class WorkoutHistoryActivity extends AppCompatActivity {
     private LinearLayout layoutHistory;
     private WorkoutLogRepository logRepository;
     private ExerciseRepository exerciseRepository;
+    private EditText etExerciseName;
+    private Button btnSearch;
+    private TextView tvStats;
+    private LinearLayout layoutChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +32,10 @@ public class WorkoutHistoryActivity extends AppCompatActivity {
         setTitle("Historial");
 
         layoutHistory = findViewById(R.id.layoutHistory);
+        etExerciseName = findViewById(R.id.etExerciseName);
+        btnSearch = findViewById(R.id.btnSearch);
+        tvStats = findViewById(R.id.tvExerciseStats);
+        layoutChart = findViewById(R.id.layoutChart);
 
         logRepository = new WorkoutLogRepository(this);
         exerciseRepository = new ExerciseRepository(this);
@@ -34,6 +44,20 @@ public class WorkoutHistoryActivity extends AppCompatActivity {
         int userId = session.getUserId();
 
         loadHistory(userId);
+
+        btnSearch.setOnClickListener(v -> {
+
+            String exerciseName =
+                    etExerciseName.getText().toString().trim();
+
+            if (exerciseName.isEmpty()) {
+                tvStats.setText("Introduce un ejercicio.");
+                layoutChart.removeAllViews();
+                return;
+            }
+
+            showExerciseStats(userId, exerciseName);
+        });
     }
 
     private void loadHistory(int userId) {
@@ -64,5 +88,36 @@ public class WorkoutHistoryActivity extends AppCompatActivity {
 
             layoutHistory.addView(tv);
         }
+    }
+
+    private void showExerciseStats(int userId, String exerciseName) {
+
+        List<WorkoutLog> logs = logRepository.getLogsByExerciseName(userId, exerciseName);
+
+        layoutChart.removeAllViews();
+
+        if (logs.isEmpty()) {
+
+            tvStats.setText("No hay registros para ese ejercicio.");
+            return;
+        }
+
+        int times = logs.size();
+        double maxWeight = 0;
+
+        for (WorkoutLog log : logs) {
+
+            if (log.getWeight() > maxWeight) {
+                maxWeight = log.getWeight();
+            }
+        }
+
+        String text = "Ejercicio: " + exerciseName + "\nVeces realizado: " + times + "\nPeso máximo: " + maxWeight + " kg";
+        tvStats.setText(text);
+
+        TextView tvChart = new TextView(this);
+        tvChart.setText("\nAquí mostraremos la gráfica en el siguiente paso.");
+
+        layoutChart.addView(tvChart);
     }
 }
