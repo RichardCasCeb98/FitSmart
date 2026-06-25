@@ -9,6 +9,12 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class WorkoutHistoryActivity extends AppCompatActivity {
@@ -19,7 +25,7 @@ public class WorkoutHistoryActivity extends AppCompatActivity {
     private EditText etExerciseName;
     private Button btnSearch;
     private TextView tvStats;
-    private LinearLayout layoutChart;
+    private LineChart chartProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +41,7 @@ public class WorkoutHistoryActivity extends AppCompatActivity {
         etExerciseName = findViewById(R.id.etExerciseName);
         btnSearch = findViewById(R.id.btnSearch);
         tvStats = findViewById(R.id.tvExerciseStats);
-        layoutChart = findViewById(R.id.layoutChart);
+        chartProgress = findViewById(R.id.chartProgress);
 
         logRepository = new WorkoutLogRepository(this);
         exerciseRepository = new ExerciseRepository(this);
@@ -52,7 +58,6 @@ public class WorkoutHistoryActivity extends AppCompatActivity {
 
             if (exerciseName.isEmpty()) {
                 tvStats.setText("Introduce un ejercicio.");
-                layoutChart.removeAllViews();
                 return;
             }
 
@@ -69,7 +74,6 @@ public class WorkoutHistoryActivity extends AppCompatActivity {
             TextView tv = new TextView(this);
             tv.setText("Todavía no has registrado entrenamientos.");
             layoutHistory.addView(tv);
-
             return;
         }
 
@@ -80,13 +84,18 @@ public class WorkoutHistoryActivity extends AppCompatActivity {
             if (exercise == null)
                 continue;
 
+            LinearLayout card = new LinearLayout(this);
+            card.setOrientation(LinearLayout.VERTICAL);
+            card.setPadding(20, 20, 20, 20);
+
             TextView tv = new TextView(this);
+
             String text = log.getDate() + "\n" + exercise.getName() + "\nPeso: " + log.getWeight() + " kg" + "\nSeries: " + log.getSets() + "\nRepeticiones: " + log.getReps();
 
             tv.setText(text);
-            tv.setPadding(20,20,20,20);
 
-            layoutHistory.addView(tv);
+            card.addView(tv);
+            layoutHistory.addView(card);
         }
     }
 
@@ -94,10 +103,7 @@ public class WorkoutHistoryActivity extends AppCompatActivity {
 
         List<WorkoutLog> logs = logRepository.getLogsByExerciseName(userId, exerciseName);
 
-        layoutChart.removeAllViews();
-
         if (logs.isEmpty()) {
-
             tvStats.setText("No hay registros para ese ejercicio.");
             return;
         }
@@ -112,12 +118,22 @@ public class WorkoutHistoryActivity extends AppCompatActivity {
             }
         }
 
-        String text = "Ejercicio: " + exerciseName + "\nVeces realizado: " + times + "\nPeso máximo: " + maxWeight + " kg";
+        String text = "Ejercicio: " + exerciseName + "\n\nVeces realizado: " + times + "\nPeso máximo: " + maxWeight + " kg";
         tvStats.setText(text);
 
-        TextView tvChart = new TextView(this);
-        tvChart.setText("\nAquí mostraremos la gráfica en el siguiente paso.");
+        ArrayList<Entry> entries = new ArrayList<>();
 
-        layoutChart.addView(tvChart);
+        for (int i = 0; i < logs.size(); i++) {
+            entries.add(new Entry(i + 1, (float) logs.get(i).getWeight())
+            );
+        }
+
+        LineDataSet dataSet = new LineDataSet(entries, "Peso (kg)");
+
+        LineData lineData = new LineData(dataSet);
+
+        chartProgress.setData(lineData);
+        chartProgress.getDescription().setText("Progresión del peso");
+        chartProgress.invalidate();
     }
 }
