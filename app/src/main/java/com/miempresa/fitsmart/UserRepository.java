@@ -72,31 +72,6 @@ public class UserRepository {
         return result != -1;
     }
 
-    public Profile getProfile(int userId) {
-
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery("SELECT age, weight, height, level, goal FROM user_profile WHERE user_id = ?", new String[]{String.valueOf(userId)});
-
-        Profile profile = null;
-
-        if(cursor.moveToFirst()) {
-
-            int age = cursor.getInt(0);
-            double weight = cursor.getDouble(1);
-            double height = cursor.getDouble(2);
-            String level = cursor.getString(3);
-            String goal = cursor.getString(4);
-
-            profile = new Profile(age, weight, height, level, goal);
-        }
-
-        cursor.close();
-        db.close();
-
-        return profile;
-    }
-
     public boolean hasProfile(int userId) {
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
