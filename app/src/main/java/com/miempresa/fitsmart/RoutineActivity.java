@@ -1,6 +1,7 @@
 package com.miempresa.fitsmart;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
@@ -35,15 +36,15 @@ public class RoutineActivity extends AppCompatActivity {
         layoutDays = findViewById(R.id.layoutDays);
         btnHistory = findViewById(R.id.btnHistory);
 
+        tvRoutineName.setTextColor(Color.WHITE);
+        tvDays.setTextColor(Color.WHITE);
+
         SessionManager session = new SessionManager(this);
         int userId = session.getUserId();
 
-        btnHistory.setOnClickListener(v -> {
-
-            Intent intent = new Intent(RoutineActivity.this, WorkoutHistoryActivity.class);
+        btnHistory.setOnClickListener(v -> {Intent intent = new Intent(RoutineActivity.this, WorkoutHistoryActivity.class);
             startActivity(intent);
         });
-
 
         RoutineRepository routineRepo = new RoutineRepository(this);
         ExerciseRepository exerciseRepo = new ExerciseRepository(this);
@@ -70,6 +71,8 @@ public class RoutineActivity extends AppCompatActivity {
                     tvDay.setTypeface(null, Typeface.BOLD);
                     tvDay.setPadding(0, 32, 0, 16);
 
+                    tvDay.setTextColor(getColor(R.color.blue));
+
                     String finalCurrentDay = currentDay;
 
                     tvDay.setOnClickListener(v -> {
@@ -91,6 +94,8 @@ public class RoutineActivity extends AppCompatActivity {
                     TextView tvExercise = new TextView(this);
                     tvExercise.setText("• " + exercise.getName() + " - " + re.getSets() + "x" + re.getReps());
                     tvExercise.setPadding(50, 0, 0, 12);
+
+                    tvExercise.setTextColor(Color.parseColor("#DDDDDD"));
 
                     layoutDays.addView(tvExercise);
                 }

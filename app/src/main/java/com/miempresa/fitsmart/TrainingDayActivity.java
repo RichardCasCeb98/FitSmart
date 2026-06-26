@@ -11,6 +11,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -80,22 +85,36 @@ public class TrainingDayActivity extends AppCompatActivity {
 
         LinearLayout card = new LinearLayout(this);
         card.setOrientation(LinearLayout.VERTICAL);
-        card.setPadding(20, 20, 20, 20);
+        card.setPadding(40,40,40,40);
+        card.setBackgroundColor(android.graphics.Color.parseColor("#2A2A2A"));
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0,0,0,30);
+        card.setLayoutParams(params);
 
         TextView tvName = new TextView(this);
         tvName.setText(exercise.getName());
-        tvName.setTextSize(20);
+        tvName.setTextSize(22);
+        tvName.setTextColor(android.graphics.Color.WHITE);
+        tvName.setTypeface(null, android.graphics.Typeface.BOLD);
 
         TextView tvObjective = new TextView(this);
         tvObjective.setText("Objetivo: " + routineExercise.getSets() + " x " + routineExercise.getReps());
+        tvObjective.setTextColor(android.graphics.Color.parseColor("#DDDDDD"));
 
         EditText etWeight = new EditText(this);
         etWeight.setHint("Peso (kg)");
         etWeight.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        etWeight.setTextColor(android.graphics.Color.WHITE);
+        etWeight.setHintTextColor(android.graphics.Color.parseColor("#CCFFFFFF"));
+        etWeight.setBackgroundTintList(android.content.res.ColorStateList.valueOf(android.graphics.Color.WHITE));
 
         EditText etReps = new EditText(this);
         etReps.setHint("Repeticiones realizadas");
         etReps.setInputType(InputType.TYPE_CLASS_NUMBER);
+        etReps.setTextColor(android.graphics.Color.WHITE);
+        etReps.setHintTextColor(android.graphics.Color.parseColor("#CCFFFFFF"));
+        etReps.setBackgroundTintList(android.content.res.ColorStateList.valueOf(android.graphics.Color.WHITE));
 
         card.addView(tvName);
         card.addView(tvObjective);
@@ -148,5 +167,47 @@ public class TrainingDayActivity extends AppCompatActivity {
         Toast.makeText(this, "Entrenamiento guardado", Toast.LENGTH_SHORT).show();
 
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_secondary, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == R.id.menu_routine) {
+
+            Intent intent = new Intent(this, RoutineActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            startActivity(intent);
+            finish();
+
+            return true;
+        }
+
+        if (item.getItemId() == R.id.menu_logout) {
+
+            SessionManager session = new SessionManager(this);
+            session.logout();
+
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+            startActivity(intent);
+            finish();
+
+            return true;
+        }
+
+        if (item.getItemId() == R.id.menu_exit) {
+            finishAffinity();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

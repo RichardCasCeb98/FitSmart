@@ -9,6 +9,12 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -75,6 +81,8 @@ public class WorkoutHistoryActivity extends AppCompatActivity {
 
             TextView tv = new TextView(this);
             tv.setText("Todavía no has registrado entrenamientos.");
+            tv.setTextColor(android.graphics.Color.WHITE);
+
             layoutHistory.addView(tv);
             return;
         }
@@ -95,21 +103,30 @@ public class WorkoutHistoryActivity extends AppCompatActivity {
                 TextView tvDate = new TextView(this);
                 tvDate.setText(currentDate);
                 tvDate.setTextSize(20);
-                tvDate.setPadding(0, 30, 0, 20);
+                tvDate.setTextColor(getColor(R.color.blue));
                 tvDate.setTypeface(null, android.graphics.Typeface.BOLD);
+                tvDate.setPadding(0, 35, 0, 20);
 
                 layoutHistory.addView(tvDate);
             }
 
             LinearLayout card = new LinearLayout(this);
             card.setOrientation(LinearLayout.VERTICAL);
-            card.setPadding(40, 20, 40, 20);
+            card.setPadding(40, 30, 40, 30);
+            card.setBackgroundColor(android.graphics.Color.parseColor("#2A2A2A"));
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0, 0, 0, 20);
+            card.setLayoutParams(params);
 
             TextView tvExercise = new TextView(this);
 
-            String text = exercise.getName() + "\n" + log.getWeight() + " kg" + " - " + log.getSets() + "x" + log.getReps();
+            String text = exercise.getName() + "\n" + log.getWeight() + " kg - " + log.getSets() + "x" + log.getReps();
 
             tvExercise.setText(text);
+            tvExercise.setTextColor(android.graphics.Color.WHITE);
+            tvExercise.setTextSize(16);
+
             card.addView(tvExercise);
 
             layoutHistory.addView(card);
@@ -181,5 +198,47 @@ public class WorkoutHistoryActivity extends AppCompatActivity {
 
         chartProgress.getDescription().setText("Progresión del peso");
         chartProgress.invalidate();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_secondary, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == R.id.menu_routine) {
+
+            Intent intent = new Intent(this, RoutineActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            startActivity(intent);
+            finish();
+
+            return true;
+        }
+
+        if (item.getItemId() == R.id.menu_logout) {
+
+            SessionManager session = new SessionManager(this);
+            session.logout();
+
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+            startActivity(intent);
+            finish();
+
+            return true;
+        }
+
+        if (item.getItemId() == R.id.menu_exit) {
+            finishAffinity();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
