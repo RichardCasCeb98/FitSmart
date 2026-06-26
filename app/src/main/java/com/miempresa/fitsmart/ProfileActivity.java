@@ -2,18 +2,18 @@ package com.miempresa.fitsmart;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 import android.widget.Spinner;
-import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private EditText etAge, etWeight, etHeight;
-    Spinner spLevel, spGoal;
+    private Spinner spLevel, spGoal;
     private Button btnSave, btnLogout;
 
     private UserRepository repo;
@@ -23,6 +23,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
         session = new SessionManager(this);
         repo = new UserRepository(this);
 
@@ -34,14 +35,14 @@ public class ProfileActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btnSave);
         btnLogout = findViewById(R.id.btnLogout);
 
-        ArrayAdapter<CharSequence> levelAdapter = ArrayAdapter.createFromResource(this, R.array.levels, android.R.layout.simple_spinner_item);
-        levelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> levelAdapter = ArrayAdapter.createFromResource(this, R.array.levels, R.layout.spinner_item);
+        levelAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
         spLevel.setAdapter(levelAdapter);
 
-        ArrayAdapter<CharSequence> goalAdapter = ArrayAdapter.createFromResource(this, R.array.goals, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> goalAdapter = ArrayAdapter.createFromResource(this, R.array.goals, R.layout.spinner_item);
 
-        goalAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        goalAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
         spGoal.setAdapter(goalAdapter);
 
@@ -77,13 +78,11 @@ public class ProfileActivity extends AppCompatActivity {
             double weight = Double.parseDouble(weightText);
             double height = Double.parseDouble(heightText);
 
-            if(age < 12 || age > 100) {
-                Toast.makeText(this, "Edad no válida", Toast.LENGTH_SHORT).show();
+            if (age < 12 || age > 100) {Toast.makeText(this, "Edad no válida", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            if(weight <= 0 || height <= 0) {
-                Toast.makeText(this, "Peso y altura deben ser mayores que 0", Toast.LENGTH_SHORT).show();
+            if (weight <= 0 || height <= 0) {Toast.makeText(this, "Peso y altura deben ser mayores que 0", Toast.LENGTH_SHORT).show();
                 return;
             }
 

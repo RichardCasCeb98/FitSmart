@@ -1,60 +1,93 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="24dp"
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/etAge"
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="40dp"
-        android:hint="Edad" />
+        android:layout_height="match_parent"
+        android:src="@drawable/fondo"
+        android:scaleType="centerCrop" />
 
-    <EditText
-        android:id="@+id/etWeight"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:hint="Peso" />
+        android:layout_height="match_parent" />
 
-    <EditText
-        android:id="@+id/etHeight"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:hint="Altura" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nivel"/>
+        <EditText
+            android:id="@+id/etAge"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="205dp"
+            android:backgroundTint="@android:color/white"
+            android:hint="Edad"
+            android:textColor="@android:color/white"
+            android:textColorHint="#CCFFFFFF"/>
 
-    <Spinner
-        android:id="@+id/spLevel"
-        android:layout_width="match_parent"
-        android:layout_height="48dp" />
+        <EditText
+            android:id="@+id/etWeight"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="@android:color/white"
+            android:hint="Peso"
+            android:textColor="@android:color/white"
+            android:textColorHint="#CCFFFFFF" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Objetivo"/>
+        <EditText
+            android:id="@+id/etHeight"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="@android:color/white"
+            android:hint="Altura"
+            android:textColor="@android:color/white"
+            android:textColorHint="#CCFFFFFF" />
 
-    <Spinner
-        android:id="@+id/spGoal"
-        android:layout_width="match_parent"
-        android:layout_height="48dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nivel"
+            android:textColor="@android:color/white" />
 
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Guardar Perfil" />
+        <Spinner
+            android:id="@+id/spLevel"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp" />
 
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:text="Cerrar sesion" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Objetivo"
+            android:textColor="@android:color/white" />
 
-</LinearLayout>
+        <Spinner
+            android:id="@+id/spGoal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Guardar Perfil" />
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cerrar sesión"
+            tools:layout_marginTop="10dp" />
+
+    </LinearLayout>
+
+</FrameLayout>

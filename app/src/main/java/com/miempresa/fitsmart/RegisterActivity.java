@@ -12,6 +12,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText etUsername, etEmail, etPassword;
     Button btnRegister;
     UserRepository repo;
+    private Button btnBackLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,11 @@ public class RegisterActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnRegister = findViewById(R.id.btnRegister);
+        btnBackLogin = findViewById(R.id.btnBackLogin);
+
+        btnBackLogin.setOnClickListener(v -> {
+            finish();
+        });
 
         btnRegister.setOnClickListener(v -> {
 

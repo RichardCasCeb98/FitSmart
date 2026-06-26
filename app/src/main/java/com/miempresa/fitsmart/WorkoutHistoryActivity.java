@@ -130,11 +130,16 @@ public class WorkoutHistoryActivity extends AppCompatActivity {
 
         double maxWeight = 0;
         double totalWeight = 0;
+        int prReps = 0;
+        String prDate = "";
 
         for (WorkoutLog log : logs) {
 
             if (log.getWeight() > maxWeight) {
+
                 maxWeight = log.getWeight();
+                prReps = log.getReps();
+                prDate = log.getDate();
             }
 
             totalWeight += log.getWeight();
@@ -147,8 +152,7 @@ public class WorkoutHistoryActivity extends AppCompatActivity {
         double lastWeight = lastLog.getWeight();
         String lastDate = lastLog.getDate();
 
-        String text = "Ejercicio: " + exerciseName + "\n\nVeces realizado: " + times + "\nPeso máximo: " + maxWeight + " kg" + "\nPeso medio: " + String.format("%.1f", averageWeight) + " kg" + "\nÚltimo peso: " + lastWeight + " kg" + "\nÚltimo entrenamiento: " + lastDate;
-
+        String text = "Ejercicio: " + exerciseName + "\n\nVeces realizado: " + times + "\nPeso máximo: " + maxWeight + " kg" + "\nPeso medio: " + String.format("%.1f", averageWeight) + " kg" + "\nÚltimo peso: " + lastWeight + " kg" + "\nÚltimo entrenamiento: " + lastDate + "\n\nRécord personal" + "\n" + maxWeight + " kg x " + prReps + " reps" + "\n" + prDate;
         tvStats.setText(text);
 
         ArrayList<Entry> entries = new ArrayList<>();

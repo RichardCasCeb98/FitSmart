@@ -14,13 +14,20 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin, btnGoRegister;
     UserRepository repo;
     SessionManager session;
+    private Button btnExit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
 
         session = new SessionManager(this);
         repo = new UserRepository(this);
+        btnExit = findViewById(R.id.btnExit);
+
+        btnExit.setOnClickListener(v -> {
+            finishAffinity();
+        });
 
         if(session.isLogged()) {
 
@@ -37,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        setContentView(R.layout.activity_login);
 
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
